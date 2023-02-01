@@ -6,11 +6,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import oslomet.testing.API.AdminKontoController;
+import oslomet.testing.API.BankController;
 import oslomet.testing.Models.Konto;
 import oslomet.testing.Sikkerhet.Sikkerhet;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EnhetstestAdminKontoController {
@@ -20,16 +25,16 @@ public class EnhetstestAdminKontoController {
     private AdminKontoController adminKontoController;
 
     @Mock
-    //denne skal Mock'es, vi later som at vi kaller den
+    //denne skal Mock'es, vi later som at vi kaller den eller den skal simuleres
     private AdminKontoController repository;
 
-    //denne skal Mock'es
+    //denne skal Mock'es - simulere kallet
     @Mock
     private Sikkerhet sjekk;
 
     //Første test, tester hentAlleKonti() - sjekker om
     @Test
-    public void hentKonti_LoggetInn() {
+    public void hentAlleKonti_LoggetInn() {
         //arrange - må sette opp kunden/kunder før vi fortsetter
 
         //siden hent kontoinformasjon returnerer en list med info, tar vi
@@ -42,25 +47,38 @@ public class EnhetstestAdminKontoController {
         kontoinfo.add(konti1);
         kontoinfo.add(konti2);
 
+        //sjekker om sikkerhet først
+        when(sjekk.loggetInn()).thenReturn("93840283962");
+
+        //sjekker for repository - skal kun returnere kontoinfo eller listen
+        when(repository.hentAlleKonti()).thenReturn(kontoinfo);
+
         //act - kjører løsningen
+        //returnere en liste av kontoinfo, fra Bank controlleren
 
-
+        List<Konto> resultat = BankController.hentKonti();
 
         //assert
+        assertEquals(kontoinfo, resultat);
     }
 
     @Test
     public void hentKonti_IkkeloggetInn() {
         //arrange - må sette opp kunden/kunder før vi fortsetter
-
+        when(sjekk.loggetInn()).thenReturn(null);
 
         //act - kjører løsningen
 
-
+        List<Konto> resultat = BankController.hentKonti();
 
         //assert
+        assertNull(resultat);
     }
 
+    @Test
+    public void registrerKonto_loggetInn(){
+
+    }
 
 
 }
