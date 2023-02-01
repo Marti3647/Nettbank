@@ -65,3 +65,4 @@ public class EnhetstestSikkerhetsController {
         assertEquals("OK", resultat);
     }
 }
+//Martine er kulest
