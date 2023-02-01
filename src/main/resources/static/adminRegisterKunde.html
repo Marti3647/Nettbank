@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>TestingBank - Administrasjon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="view.css">
+    <script src="js/adminRegistrerKunde.js"></script>
+
+</head>
+<body>
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="#" class="navbar-brand">Nettbank : Admin</a>
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="adminRegisterKunde.html">Registrer kunde</a>
+                </li>
+                <li>
+                    <a href="adminKunde.html">Endre kunde</a>
+                </li>
+                <li>
+                    <a href="adminRegisterKonto.html">Register konto</a>
+                </li>
+                <li>
+                    <a href="adminEndreKonto.html">Endre konto</a>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="loggUt.html">Logg ut</a></li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+<script src="js/adminRegistrerKunde.js"></script>
+
+<div class="container">
+    <br/><br/>
+    <h2>Registrer Kunde</h2>
+        <div class="row">
+            <div class="col-md-5">
+                <label >Personnummer:</label>
+                <input type="text" class="form-control" id="personnummer">
+                <span style="color: red" id="feilPersonnummer"></span>
+            </div>
+            <div class="col-md-5">
+                <label >Fornavn: </label>
+                <input type="text" class="form-control" id="fornavn">
+                <span style="color: red" id="feilFornavn"></span>
+            </div>
+            <div class="col-md-5">
+                <label >Etternavn:</label>
+                <input type="text" class="form-control" id="etternavn">
+                <span style="color: red" id="feilEtternavn"></span>
+            </div>
+            <div class="col-md-5">
+                <label >Adresse:</label>
+                <input type="text" class="form-control" id="adresse">
+                <span style="color: red" id="feilAdresse"></span>
+            </div>
+            <div class="col-md-5">
+                <label >Postnr:</label>
+                <input type="text" class="form-control" id="postnr">
+                <span style="color: red" id="feilPostnr"></span>
+            </div>
+            <div class="col-md-5">
+                <label >Poststed:</label>
+                <input type="text" class="form-control" id="poststed">
+                <span style="color: red" id="feilPoststed"></span>
+            </div>
+            <div class="col-md-5">
+                <label >Telefonnr:</label>
+                <input type="text" class="form-control" id="telefonnr">
+                <span style="color: red" id="feilTelefonnr"></span>
+            </div>
+            <div class="col-md-5">
+                <label >Passord:</label>
+                <input type="text" class="form-control" id="passord">
+            </div>
+        </div>
+        <br/>
+        <button class="btn btn-success" id="regKunde">Registrer kunde</button>
+        <br/> <br/>
+</div>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Nettbank</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="view.css">
+</head>
+<body>
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="index.html" class="navbar-brand">Nettbank</a>
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="saldo.html">Saldo</a>
+                </li>
+                <li>
+                    <a href="registerBetaling.html">Register betaling</a>
+                </li>
+                <li>
+                    <a href="utforBetalinger.html">Utfør betalinger</a>
+                </li>
+                <li>
+                    <a href="transaksjon.html">Transaksjoner</a>
+                </li>
+                <li>
+                    <a href="kundeInfo.html">Kunde-info</a>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="loggUt.html">Logg ut</a></li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+<br/><br/>
+
+
+<script src="js/registrerBetaling.js"></script>
+
+<div class="container">
+    <br/><br/>
+    <h2>Registrer betalinger</h2>
+    <p>Velg konto og andre data for å registrere en regning</p>
+        <div class="row">
+            <div class="col-md-5">
+                <label >Kontonr:</label>
+                <div id="selekt"></div>
+                <!--<input type="text" class="form-control" id="kontoNr"-->
+            </div>
+            <div class="col-md-5">
+                <label >Til kontonummer:</label>
+                <input type="text" class="form-control" id="tilKonto"><span style="color: red" id="feilTilKontonummer"></span>
+            </div>
+            <div class="col-md-5">
+                <label >Betalingsdato:</label>
+                <input type="text" class="form-control" id="dato" placeholder="yyyy-mm-dd"><span style="color: red" id="feilDato"></span>
+            </div>
+            <div class="col-md-5">
+                <label >Beløp:</label>
+                <input type="text" class="form-control" id="belop">
+            </div>
+            <div class="col-md-5">
+                <label >Melding:</label>
+                <input type="text" class="form-control" id="melding">
+            </div>
+        </div>
+        <br/>
+        <button class="btn btn-success" id="regBetaling">Registrer betaling</button>
+        <br/> <br/>
+</div>
