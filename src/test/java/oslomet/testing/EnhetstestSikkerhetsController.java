@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
 import org.springframework.mock.web.MockHttpSession;
 import oslomet.testing.DAL.BankRepository;
 import oslomet.testing.Sikkerhet.Sikkerhet;
@@ -33,23 +34,28 @@ public class EnhetstestSikkerhetsController {
     // denne skal Mock'es
     private MockHttpSession session;
 
-/* Hentet fra video, vet ikke om skal være med!
-
     @Before
     public void initSession(){
-        Map<String, Object> attributes = new HashMap<~>();
+        Map<String,Object> attributes = new HashMap<>();
 
         doAnswer(new Answer<Object>(){
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable{
-                String key = (String) invocation.getArgument()[0];
-                Object value = invocation.getArgument()[1];
-                attributes.put(key, value);
-                return null;
+                String key = (String) invocation.getArguments()[0];
+                return attributes.get(key);
             }
-        }).when(session).setAttribute(anyString(), any());
+        }).when(session).getAttribute(anyString());
+
+        doAnswer(new Answer<Object>(){
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable{
+                String key = (String) invocation.getArguments()[0];
+                Object value = invocation.getArguments()[1];
+                attributes.put(key,value);
+                return attributes.get(key);
+            }
+        }).when(session).getAttribute(anyString());
     }
-*/
 
     @Test
     public void test_sjekkLoggetInn() {
@@ -61,7 +67,22 @@ public class EnhetstestSikkerhetsController {
 
         // act
         String resultat = sikkerhetsController.sjekkLoggInn("12345678901","HeiHeiHei");
+
         // assert
         assertEquals("OK", resultat);
     }
+
+
+    @Test
+    public void test_loggUt(){
+
+        //arrange
+
+
+        //act
+
+        //assert
+
+    }
+
 }
