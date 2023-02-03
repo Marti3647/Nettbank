@@ -1,4 +1,4 @@
-package oslomet.testing;
+package oslomet.testing;  //Martine jobber med denne
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
