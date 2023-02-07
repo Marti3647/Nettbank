@@ -9,6 +9,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import oslomet.testing.API.AdminKontoController;
 import oslomet.testing.DAL.AdminRepository;
 import oslomet.testing.Models.Konto;
+import oslomet.testing.Models.Kunde;
 import oslomet.testing.Sikkerhet.Sikkerhet;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -49,10 +51,10 @@ public class EnhetstestAdminKontoController {
         kontoinfo.add(konti2);
 
         //sjekker om sikkerhet først
-        when(sjekk.loggetInn()).thenReturn("84840323962");
+        Mockito.when(sjekk.loggetInn()).thenReturn("84840323962");
 
         //sjekker for repository - skal kun returnere kontoinfo eller listen
-        when(repository.hentAlleKonti()).thenReturn(kontoinfo);
+        Mockito.when(repository.hentAlleKonti()).thenReturn(kontoinfo);
 
         //act - kjører løsningen
         //returnere en liste av kontoinfo, fra Bank controlleren
@@ -66,7 +68,7 @@ public class EnhetstestAdminKontoController {
     @Test
     public void hentKonti_IkkeloggetInn() {
         //arrange - må sette opp kunden/kunder før vi fortsetter
-        when(sjekk.loggetInn()).thenReturn(null);
+        Mockito.when(sjekk.loggetInn()).thenReturn(null);
 
         //act - kjører løsningen
 
@@ -79,13 +81,95 @@ public class EnhetstestAdminKontoController {
     @Test
     public void registrerKonto_loggetInn(){
         //arrange
-        when(repository.registrerKonto()).thenReturn("OK");
+        Konto konto1 = new Konto("39482048203", "49305936782", 200, "Brukskont",
+                "NOK", null);
 
-        //act
+        Mockito.when(sjekk.loggetInn()).thenReturn("384793872947");
+        Mockito.when(repository.registrerKonto(konto1)).thenReturn("OK");
 
-
+        //act - kjører løsningen
+        String resultat = adminKontoController.registrerKonto(konto1);
 
         //assert
+        assertEquals("OK", resultat);
+
+    }
+    @Test
+    public void registrerKonto_ikkeLoggetInn(){
+        //arrange
+        Konto konto1 = new Konto("39482048203", "49305936782", 200, "Brukskont",
+                "NOK", null);
+
+        Mockito.when(repository.registrerKonto(konto1)).thenReturn("Ikke innlogget");
+
+        //act
+        String resultat = adminKontoController.registrerKonto(konto1);
+
+        //assert
+        assertEquals("Ikke innlogget", resultat);
+    }
+
+    @Test
+    public void endreKonto_loggetInn(){
+        //arrange
+        Konto konto1 = new Konto("39482048203", "49305936782", 200, "Brukskont",
+                "NOK", null);
+
+        Mockito.when(sjekk.loggetInn()).thenReturn("384793872947");
+        Mockito.when(repository.endreKonto(konto1)).thenReturn("OK");
+
+        //act - kjører løsningen
+        String resultat = adminKontoController.endreKonto(konto1);
+
+        //assert
+        assertEquals("OK", resultat);
+
+    }
+
+    @Test
+    public void endreKonto_ikkeLoggetInn(){
+        //arrange
+        Konto konto1 = new Konto("39482048203", "49305936782", 200, "Brukskont",
+                "NOK", null);
+
+        Mockito.when(repository.endreKonto(konto1)).thenReturn("Ikke innlogget");
+
+        //act
+        String resultat = adminKontoController.endreKonto(konto1);
+
+        //assert
+        assertEquals("Ikke innlogget", resultat);
+
+    }
+
+    @Test
+    public void slettKonto_loggetInn(){
+        //arrange
+        String kontonummer = "21345672";
+
+        Mockito.when(sjekk.loggetInn()).thenReturn(kontonummer);
+        Mockito.when(repository.slettKonto(kontonummer)).thenReturn("OK");
+
+        //act
+        String resultat = adminKontoController.slettKonto(kontonummer);
+
+        //assert
+        assertEquals("OK", resultat);
+
+    }
+
+    @Test
+    public void slettKonto_ikkeLoggetInn(){
+        //arrange
+        String kontonummer = "21345672";
+
+        Mockito.when(sjekk.loggetInn()).thenReturn(null);
+
+        //act
+        String resultat = adminKontoController.slettKonto(kontonummer);
+
+        //assert
+        assertEquals("Ikke innlogget", resultat);
 
     }
 
