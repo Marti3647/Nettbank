@@ -165,18 +165,18 @@ public class EnhetstestBankController {
 
     @Test
     public void registrerBetaling_loggetInn(){
-        Transaksjon transaksjoner = new Transaksjon(0, "41275254977", 3000, "2023-02-01", "overføringMellomKonto", "1", "12345678901");
+        Transaksjon transaksjoner = new Transaksjon(0, "20102012345", 3000, "2023-02-01", "overføringMellomKonto", "1", "12345678901");
         when(sjekk.loggetInn()).thenReturn("01010110523");
-        when(repository.registrerBetaling(transaksjoner)).thenReturn("testOk");
-        String resultat = repository.registrerBetaling(transaksjoner);
-        assertEquals("testOk", resultat);
+        when(repository.registrerBetaling(transaksjoner)).thenReturn("OK");
+        String resultat = bankController.registrerBetaling(transaksjoner);
+        assertEquals("OK", resultat);
     }
 
     @Test
     public void registrerBetaling_ikkeLoggetInn(){
-        Transaksjon transaksjoner = new Transaksjon(0, "41275254977", 3000, "2023-02-01", "overføringMellomKonto", "1", "12345678901");
+        Transaksjon transaksjoner = new Transaksjon(0, "20102012345", 3000, "2023-02-01", "overføringMellomKonto", "1", "12345678901");
         when(sjekk.loggetInn()).thenReturn(null);
-        String resultat = repository.registrerBetaling(transaksjoner);
+        String resultat = bankController.registrerBetaling(transaksjoner);
         assertNull(resultat);
     }
 
