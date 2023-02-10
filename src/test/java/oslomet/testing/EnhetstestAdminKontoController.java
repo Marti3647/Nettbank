@@ -97,7 +97,8 @@ public class EnhetstestAdminKontoController {
         Konto konto1 = new Konto("39482048203", "49305936782", 200, "Brukskont",
                 "NOK", null);
 
-        Mockito.when(repository.registrerKonto(konto1)).thenReturn("Ikke innlogget");
+        //Mockito.when(repository.registrerKonto(konto1)).thenReturn("Ikke innlogget");
+        Mockito.when(sjekk.loggetInn()).thenReturn(null);
 
         //act
         String resultat = adminKontoController.registrerKonto(konto1);
@@ -129,7 +130,7 @@ public class EnhetstestAdminKontoController {
         Konto konto1 = new Konto("39482048203", "49305936782", 200, "Brukskont",
                 "NOK", null);
 
-        Mockito.when(repository.endreKonto(konto1)).thenReturn("Ikke innlogget");
+        Mockito.when(sjekk.loggetInn()).thenReturn(null);
 
         //act
         String resultat = adminKontoController.endreKonto(konto1);
@@ -152,7 +153,6 @@ public class EnhetstestAdminKontoController {
 
         //assert
         assertEquals("OK", resultat);
-
     }
 
     @Test
