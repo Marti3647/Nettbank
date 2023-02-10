@@ -71,9 +71,9 @@ public class EnhetstestBankController {
     public void hentKonti_LoggetInn()  {
         // arrange
         List<Konto> konti = new ArrayList<>();
-        Konto konto1 = new Konto("105010123456", "01010110523",
+        Konto konto1 = new Konto("01010110523", "01010110523",
                 720, "Lønnskonto", "NOK", null);
-        Konto konto2 = new Konto("105010123456", "12345678901",
+        Konto konto2 = new Konto("01010110523", "12345678901",
                 1000, "Lønnskonto", "NOK", null);
         konti.add(konto1);
         konti.add(konto2);
@@ -133,7 +133,6 @@ public class EnhetstestBankController {
     @Test
     public void hentSaldi_loggetInn() {
         //arrage
-
         List<Konto> konti = new ArrayList<>();
         Konto konto1 = new Konto("01010110523", "01010110523",
                 720, "Lønnskonto", "NOK", null);
@@ -146,11 +145,13 @@ public class EnhetstestBankController {
         konti.add(konto2);
         konti.add(konto3);
 
+        //act
         when(sjekk.loggetInn()).thenReturn("01010110523");
 
         when(repository.hentSaldi("01010110523")).thenReturn(konti);
         List<Konto> resultat = bankController.hentSaldi();
 
+        //assert
         assertEquals(konti, resultat);
 
         }
@@ -182,7 +183,24 @@ public class EnhetstestBankController {
 //Du er her Martine
     @Test
     public void hentBetaling_LoggetInn(){
+        // arrange
+        List<Konto> konti = new ArrayList<>();
+        Konto konto1 = new Konto("01010110523", "01010110523",
+                720, "Lønnskonto", "NOK", null);
+        Konto konto2 = new Konto("01010110523", "12345678901",
+                1000, "Lønnskonto", "NOK", null);
+        konti.add(konto1);
+        konti.add(konto2);
 
+        when(sjekk.loggetInn()).thenReturn("01010110523");
+
+        when(repository.hentKonti(anyString())).thenReturn(konti);
+
+        // act
+        List<Konto> resultat = bankController.hentKonti();
+
+        // assert
+        assertEquals(konti, resultat);
     }
 
     @Test
