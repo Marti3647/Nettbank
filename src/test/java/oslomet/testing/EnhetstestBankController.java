@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import oslomet.testing.API.BankController;
 import oslomet.testing.DAL.BankRepository;
@@ -180,27 +181,68 @@ public class EnhetstestBankController {
         assertNull(resultat);
     }
 
-//Du er her Martine
     @Test
     public void hentBetaling_LoggetInn(){
         // arrange
-        List<Konto> konti = new ArrayList<>();
-        Konto konto1 = new Konto("01010110523", "01010110523",
-                720, "Lønnskonto", "NOK", null);
-        Konto konto2 = new Konto("01010110523", "12345678901",
-                1000, "Lønnskonto", "NOK", null);
-        konti.add(konto1);
-        konti.add(konto2);
+        List<Transaksjon> betalingInfo = new ArrayList<>(); //oppretter en ny arraylist "betalingInfo"
+        Transaksjon betaling1 = new Transaksjon(0, "20102012345", 100.50, "2015-03-15", "Fjordkraft", "1", "105010123456");
+        Transaksjon betaling2 = new Transaksjon(1, "105010123456", 3000, "2023-02-07", "OverføringMellomKonto", "1", "12345678901");
+        betalingInfo.add(betaling1);
+        betalingInfo.add(betaling2);
 
-        when(sjekk.loggetInn()).thenReturn("01010110523");
+        //act
+        Mockito.when(sjekk.loggetInn()).thenReturn("01010110523");
 
-        when(repository.hentKonti(anyString())).thenReturn(konti);
+        Mockito.when(bankController.hentBetalinger()).thenReturn(betalingInfo);
 
-        // act
-        List<Konto> resultat = bankController.hentKonti();
+        List<Transaksjon> resultat = bankController.hentBetalinger();
 
-        // assert
-        assertEquals(konti, resultat);
+        //assert
+        assertEquals(betalingInfo, resultat);
+    }
+
+    @Test
+    public void hentBetaling_ikkeLoggetInn(){
+        //arrange
+        Mockito.when(sjekk.loggetInn()).thenReturn(null);
+
+        //act
+        List<Transaksjon> resultat = bankController.hentBetalinger();
+
+        //assert
+        assertNull(resultat);
+    }
+//Det er noe galt med utforBetaling. Må undersøkes nærmere
+    @Test
+    public void utforBetaling(){
+        //arrange
+        List<Transaksjon> betalingUtforsel = new ArrayList<>();
+        Transaksjon betalingUtforsel1 = new Transaksjon(0, "20102012345", 100.50, "2015-03-15", "Fjordkraft", "1", "105010123456");
+        Transaksjon betalingUtforsel2 = new Transaksjon(1, "105010123456", 3000, "2023-02-07", "OverføringMellomKonto", "1", "12345678901");
+        betalingUtforsel.add(betalingUtforsel1);
+        betalingUtforsel.add(betalingUtforsel2);
+
+        //act
+        Mockito.when(sjekk.loggetInn()).thenReturn("01010110523");
+
+        Mockito.when(bankController.utforBetaling(0)).thenReturn(betalingUtforsel);
+
+        List<Transaksjon> resultat = bankController.utforBetaling(0);
+
+        //assert
+        assertEquals(betalingUtforsel, resultat);
+    }
+
+    @Test
+    public void utforBetaling_ikkeLoggetInn(){
+        //arrange
+        Mockito.when(sjekk.loggetInn()).thenReturn(null);
+
+        //act
+        List<Transaksjon> resultat = bankController.utforBetaling(0);
+
+        //assert
+        assertNull(resultat);
     }
 
     @Test
