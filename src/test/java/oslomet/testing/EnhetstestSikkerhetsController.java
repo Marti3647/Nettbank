@@ -35,6 +35,7 @@ public class EnhetstestSikkerhetsController {
     // denne skal Mock'es
     private MockHttpSession session;
 
+    //Sjekk om denne er riktig, return attribute.get(key) eller return null?
     @Before
     public void initSession(){
         Map<String,Object> attributes = new HashMap<>();
@@ -112,6 +113,7 @@ public class EnhetstestSikkerhetsController {
         // arrange
         session.setAttribute("Innlogget", "09876543210");
 
+        //(String) nødvendig?
         // act
         sikkerhetsController.loggUt();
         String resultat = (String) session.getAttribute("Innlogget");
