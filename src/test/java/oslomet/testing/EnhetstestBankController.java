@@ -1,4 +1,4 @@
-package oslomet.testing;
+package oslomet.testing;  //Martine jobber med denne
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -222,20 +222,17 @@ public class EnhetstestBankController {
         betalingUtforsel.add(betalingUtforsel1);
         betalingUtforsel.add(betalingUtforsel2);
 
+        //when(repository.utforBetaling(0)).thenReturn("12345678901");
 
         //act
         Mockito.when(sjekk.loggetInn()).thenReturn("01010110523");
 
-        Mockito.when(bankController.utforBetaling(0)).thenReturn(betalingUtforsel);
-
-        when(repository.utforBetaling(0)).thenReturn("OK");
-
-        when(repository.hentBetalinger("01010110523"))
+        Mockito.when(repository.utforBetaling(0)).thenReturn("12345678901");
 
         List<Transaksjon> resultat = bankController.utforBetaling(0);
 
         //assert
-        assertEquals(betalingUtforsel, resultat);
+        assertEquals(resultat, null);
     }
 
     @Test
@@ -258,7 +255,7 @@ public class EnhetstestBankController {
                 "Lene", "Jensen", "Askerveien 22", "3270",
                 "Asker", "22224444", "HeiHei");
 
-        Kunde toKunde = new Kunde("01010110524",
+        Kunde inKunde = new Kunde("01010110524",
                 "Lene", "Jensen", "Askerveien 22", "3270",
                 "Asker", "22224444", "HeiHei");
 
@@ -269,8 +266,8 @@ public class EnhetstestBankController {
         Kunde resultat = bankController.hentKundeInfo();
         assertEquals(enKunde, resultat);
 
-        when(repository.endreKundeInfo(toKunde)).thenReturn("OK");
-        String result = bankController.endre(toKunde);
+        when(repository.endreKundeInfo(inKunde)).thenReturn("OK");
+        String result = bankController.endre(inKunde);
         assertEquals(result, "OK");
     }
 
