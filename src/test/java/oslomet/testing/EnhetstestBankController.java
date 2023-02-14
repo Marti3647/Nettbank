@@ -222,15 +222,17 @@ public class EnhetstestBankController {
         betalingUtforsel.add(betalingUtforsel1);
         betalingUtforsel.add(betalingUtforsel2);
 
+        //when(repository.utforBetaling(0)).thenReturn("12345678901");
+
         //act
         Mockito.when(sjekk.loggetInn()).thenReturn("01010110523");
 
-        Mockito.when(bankController.utforBetaling(0)).thenReturn(betalingUtforsel);
+        Mockito.when(repository.utforBetaling(0)).thenReturn("12345678901");
 
         List<Transaksjon> resultat = bankController.utforBetaling(0);
 
         //assert
-        assertEquals(betalingUtforsel, resultat);
+        assertEquals(resultat, null);
     }
 
     @Test
