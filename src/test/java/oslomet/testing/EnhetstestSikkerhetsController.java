@@ -46,7 +46,7 @@ public class EnhetstestSikkerhetsController {
                 return attributes.get(key);
             }
         }).when(session).getAttribute(anyString());
-
+//hei
         doAnswer(new Answer<Object>(){
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
