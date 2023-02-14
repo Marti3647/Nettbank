@@ -74,6 +74,19 @@ public class EnhetstestSikkerhetsController {
         assertEquals("OK", resultat);
     }
 
+    @Test
+    public void test_sjekkLoggetInnFeil() {
+        // arrange
+        when(repository.sjekkLoggInn(anyString(),anyString())).thenReturn("Feil i personnummer eller passord");
+
+        // act
+        String resultat = sikkerhetsController.sjekkLoggInn("12345678901", "JaJaJa");
+
+        // assert
+        assertEquals("Feil i personnummer eller passord", resultat);
+
+    }
+
 
 
     @Test
