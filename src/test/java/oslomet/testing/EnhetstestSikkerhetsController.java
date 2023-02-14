@@ -64,8 +64,9 @@ public class EnhetstestSikkerhetsController {
         // arrange
         when(repository.sjekkLoggInn(anyString(),anyString())).thenReturn("OK");
 
-        // setningen under setter ikke attributten, dvs. at det ikke er mulig å sette en attributt i dette oppsettet
+        /* setningen under setter ikke attributten, dvs. at det ikke er mulig å sette en attributt i dette oppsettet
         session.setAttribute("Innlogget", "12345678901");
+        */
 
         // act
         String resultat = sikkerhetsController.sjekkLoggInn("12345678901","HeiHeiHei");
@@ -80,13 +81,30 @@ public class EnhetstestSikkerhetsController {
         when(repository.sjekkLoggInn(anyString(),anyString())).thenReturn("Feil i personnummer eller passord");
 
         // act
-        String resultat = sikkerhetsController.sjekkLoggInn("12345678901", "JaJaJa");
+        String resultat = sikkerhetsController.sjekkLoggInn("12345678901", "HeiHeiHei");
 
         // assert
         assertEquals("Feil i personnummer eller passord", resultat);
 
     }
 
+    @Test
+    public void test_personnummerFeil() {
+        // act
+        String resultat = sikkerhetsController.sjekkLoggInn("123456789", "HeiHeiHei");
+
+        // assert
+        assertEquals("Feil i personnummer", resultat);
+    }
+
+    @Test
+    public void test_passordFeil() {
+        // act
+        String resultat = sikkerhetsController.sjekkLoggInn("12345678901","Hei");
+
+        // assert
+        assertEquals("Feil i passord", resultat);
+    }
 
 
     @Test
