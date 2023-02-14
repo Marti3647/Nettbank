@@ -108,8 +108,7 @@ public class EnhetstestSikkerhetsController {
 
 
     @Test
-    public void test_loggUt(){
-
+    public void test_loggUt() {
         // arrange
         session.setAttribute("Innlogget", "09876543210");
 
@@ -119,6 +118,30 @@ public class EnhetstestSikkerhetsController {
 
         // assert
         assertNull(resultat);
+    }
+
+    @Test
+    public void test_loggInnAdmin() {
+        // arrange
+        session.setAttribute("Innlogget", "Admin");
+
+        // act
+        String resultat = sikkerhetsController.loggInnAdmin("Admin", "Admin");
+
+        // assert
+        assertEquals("Logget inn", resultat);
+    }
+
+    @Test
+    public void test_adminIkkeLoggetInn(){
+        // arrange
+        session.setAttribute("Innlogget", null);
+
+        // act
+        String resultat = sikkerhetsController.loggInnAdmin(anyString(),anyString());
+
+        // assert
+        assertEquals("Ikke logget inn", resultat);
     }
 
     @Test
