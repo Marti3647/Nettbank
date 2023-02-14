@@ -103,4 +103,30 @@ public class EnhetstestSikkerhetsController {
         assertNull(resultat);
     }
 
+    @Test
+    public void test_LoggetInn() {
+
+        // arrange
+        session.setAttribute("Innlogget", "12345678901");
+
+        // act
+        String resultat = sikkerhetsController.loggetInn();
+
+        //assert
+        assertEquals("12345678901", resultat);
+    }
+
+    @Test
+    public void test_IkkeLoggetInn(){
+
+        //arrange
+        session.setAttribute("Innlogget",null);
+
+        // act
+        String resultat = sikkerhetsController.loggetInn();
+
+        //asaert
+        assertNull(resultat);
+    }
+
 }
