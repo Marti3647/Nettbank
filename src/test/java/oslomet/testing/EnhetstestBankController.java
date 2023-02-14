@@ -1,4 +1,4 @@
-package oslomet.testing;  //Martine jobber med denne
+package oslomet.testing;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -222,10 +222,15 @@ public class EnhetstestBankController {
         betalingUtforsel.add(betalingUtforsel1);
         betalingUtforsel.add(betalingUtforsel2);
 
+
         //act
         Mockito.when(sjekk.loggetInn()).thenReturn("01010110523");
 
         Mockito.when(bankController.utforBetaling(0)).thenReturn(betalingUtforsel);
+
+        when(repository.utforBetaling(0)).thenReturn("OK");
+
+        when(repository.hentBetalinger("01010110523"))
 
         List<Transaksjon> resultat = bankController.utforBetaling(0);
 
@@ -253,7 +258,7 @@ public class EnhetstestBankController {
                 "Lene", "Jensen", "Askerveien 22", "3270",
                 "Asker", "22224444", "HeiHei");
 
-        Kunde inKunde = new Kunde("01010110524",
+        Kunde toKunde = new Kunde("01010110524",
                 "Lene", "Jensen", "Askerveien 22", "3270",
                 "Asker", "22224444", "HeiHei");
 
@@ -264,8 +269,8 @@ public class EnhetstestBankController {
         Kunde resultat = bankController.hentKundeInfo();
         assertEquals(enKunde, resultat);
 
-        when(repository.endreKundeInfo(inKunde)).thenReturn("OK");
-        String result = bankController.endre(inKunde);
+        when(repository.endreKundeInfo(toKunde)).thenReturn("OK");
+        String result = bankController.endre(toKunde);
         assertEquals(result, "OK");
     }
 
