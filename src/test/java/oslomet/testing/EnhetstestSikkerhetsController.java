@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -54,11 +55,12 @@ public class EnhetstestSikkerhetsController {
                 attributes.put(key,value);
                 return attributes.get(key);
             }
-        }).when(session).getAttribute(anyString());
+        }).when(session).setAttribute(anyString(),any());
     }
 
     @Test
     public void test_sjekkLoggetInn() {
+
         // arrange
         when(repository.sjekkLoggInn(anyString(),anyString())).thenReturn("OK");
 
@@ -73,16 +75,19 @@ public class EnhetstestSikkerhetsController {
     }
 
 
+
     @Test
     public void test_loggUt(){
 
-        //arrange
+        // arrange
+        session.setAttribute("Innlogget", "09876543210");
 
+        // act
+        sikkerhetsController.loggUt();
+        String resultat = (String) session.getAttribute("Innlogget");
 
-        //act
-
-        //assert
-
+        // assert
+        assertNull(resultat);
     }
 
 }
