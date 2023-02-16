@@ -34,7 +34,11 @@ public class EnhetstestSikkerhetsController {
     // denne skal Mock'es
     private MockHttpSession session;
 
+<<<<<<< Updated upstream
     //Session kode for å kjøre session variabelen
+=======
+
+>>>>>>> Stashed changes
     @Before
         public void initSession(){
         Map<String,Object> attributes = new HashMap<String,Object>();
@@ -87,8 +91,73 @@ public class EnhetstestSikkerhetsController {
 
     //Tester loggetInn returnerer "Innolgget"
     @Test
+<<<<<<< Updated upstream
     public void test_LoggetInn(){
         //arange
+=======
+    public void test_personnummerFeil() {
+        // act
+        String resultat = sikkerhetsController.sjekkLoggInn("123456789", "HeiHeiHei");
+
+        // assert
+        assertEquals("Feil i personnummer", resultat);
+    }
+
+    @Test
+    public void test_passordFeil() {
+        // act
+        String resultat = sikkerhetsController.sjekkLoggInn("12345678901","Hei");
+
+        // assert
+        assertEquals("Feil i passord", resultat);
+    }
+
+
+
+
+    @Test
+    public void test_loggUt() {
+        // arrange
+        session.setAttribute("Innlogget", "09876543210");
+
+        //(String) nødvendig?
+        // act
+        sikkerhetsController.loggUt();
+        String resultat = (String) session.getAttribute("Innlogget");
+
+        // assert
+        assertNull(resultat);
+    }
+
+    @Test
+    public void test_loggInnAdmin() {
+        // arrange
+        session.setAttribute("Innlogget", "Admin");
+
+        // act
+        String resultat = sikkerhetsController.loggInnAdmin("Admin", "Admin");
+
+        // assert
+        assertEquals("Logget inn", resultat);
+    }
+
+    @Test
+    public void test_adminIkkeLoggetInn(){
+        // arrange
+        session.setAttribute("Innlogget", null);
+
+        // act
+        String resultat = sikkerhetsController.loggInnAdmin(anyString(),anyString());
+
+        // assert
+        assertEquals("Ikke logget inn", resultat);
+    }
+
+    @Test
+    public void test_LoggetInn() {
+
+        // arrange
+>>>>>>> Stashed changes
         session.setAttribute("Innlogget", "12345678901");
 
         //act
