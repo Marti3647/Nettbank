@@ -35,7 +35,7 @@ public class EnhetstestSikkerhetsController {
     // denne skal Mock'es
     private MockHttpSession session;
 
-    //Sjekk om denne er riktig, return attribute.get(key) eller return null?
+    //Sjekk om denne er riktig, return attribute.get(key) eller return null? ghghg
     @Before
     public void initSession(){
         Map<String,Object> attributes = new HashMap<>();
