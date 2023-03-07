@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -34,82 +35,141 @@ public class EnhetstestSikkerhetsController {
     // denne skal Mock'es
     private MockHttpSession session;
 
-    //Session kode for å kjøre session variabelen
+    //Sjekk om denne er riktig, return attribute.get(key) eller return null? ghghg
     @Before
-        public void initSession(){
-        Map<String,Object> attributes = new HashMap<String,Object>();
+    public void initSession(){
+        Map<String,Object> attributes = new HashMap<>();
 
         doAnswer(new Answer<Object>(){
             @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
+            public Object answer(InvocationOnMock invocation) throws Throwable{
                 String key = (String) invocation.getArguments()[0];
                 return attributes.get(key);
             }
         }).when(session).getAttribute(anyString());
-//hei
+
         doAnswer(new Answer<Object>(){
             @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
+            public Object answer(InvocationOnMock invocation) throws Throwable{
                 String key = (String) invocation.getArguments()[0];
                 Object value = invocation.getArguments()[1];
-                attributes.put(key, value);
-                return null;
+                attributes.put(key,value);
+                return attributes.get(key);
             }
-        }).when(session).setAttribute(anyString(), any());
+        }).when(session).setAttribute(anyString(),any());
     }
 
-    //Tester sjekkLoggInn innputt er OK
     @Test
-    public void test_sjekkLoggInn() {
+    public void test_sjekkLoggetInn() {
 
-        /* kode som var her før
-                // arrange
-        when(repository.sjekkLoggInn(anyString(),anyString())).thenReturn("OK");
-
-        // setningen under setter ikke attributten, dvs. at det ikke er mulig å sette en attributt i dette oppsettet
-        session.setAttribute("Innlogget", "12345678901");
-
-        // act
-        String resultat = sikkerhetsController.sjekkLoggInn("12345678901","HeiHeiHei");
-        // assert
-        assertEquals("OK", resultat);
-         */
         // arrange
         when(repository.sjekkLoggInn(anyString(),anyString())).thenReturn("OK");
 
+        /* setningen under setter ikke attributten, dvs. at det ikke er mulig å sette en attributt i dette oppsettet
+        session.setAttribute("Innlogget", "12345678901");
+        */
+
         // act
         String resultat = sikkerhetsController.sjekkLoggInn("12345678901","HeiHeiHei");
 
         // assert
         assertEquals("OK", resultat);
+    }
+
+    @Test
+    public void test_sjekkLoggetInnFeil() {
+        // arrange
+        when(repository.sjekkLoggInn(anyString(),anyString())).thenReturn("Feil i personnummer eller passord");
+
+        // act
+        String resultat = sikkerhetsController.sjekkLoggInn("12345678901", "HeiHeiHei");
+
+        // assert
+        assertEquals("Feil i personnummer eller passord", resultat);
 
     }
 
-    //Tester loggetInn returnerer "Innolgget"
     @Test
-    public void test_LoggetInn(){
-        //arange
+    public void test_personnummerFeil() {
+        // act
+        String resultat = sikkerhetsController.sjekkLoggInn("123456789", "HeiHeiHei");
+
+        // assert
+        assertEquals("Feil i personnummer", resultat);
+    }
+
+    @Test
+    public void test_passordFeil() {
+        // act
+        String resultat = sikkerhetsController.sjekkLoggInn("12345678901","Hei");
+
+        // assert
+        assertEquals("Feil i passord", resultat);
+    }
+
+
+    @Test
+    public void test_loggUt() {
+        // arrange
+        session.setAttribute("Innlogget", "09876543210");
+
+        //(String) nødvendig?
+        // act
+        sikkerhetsController.loggUt();
+        String resultat = (String) session.getAttribute("Innlogget");
+
+        // assert
+        assertNull(resultat);
+    }
+
+    @Test
+    public void test_loggInnAdmin() {
+        // arrange
+        session.setAttribute("Innlogget", "Admin");
+
+        // act
+        String resultat = sikkerhetsController.loggInnAdmin("Admin", "Admin");
+
+        // assert
+        assertEquals("Logget inn", resultat);
+    }
+
+    @Test
+    public void test_adminIkkeLoggetInn(){
+        // arrange
+        session.setAttribute("Innlogget", null);
+
+        // act
+        String resultat = sikkerhetsController.loggInnAdmin(anyString(),anyString());
+
+        // assert
+        assertEquals("Ikke logget inn", resultat);
+    }
+
+    @Test
+    public void test_LoggetInn() {
+
+        // arrange
         session.setAttribute("Innlogget", "12345678901");
 
-        //act
+        // act
         String resultat = sikkerhetsController.loggetInn();
 
         //assert
         assertEquals("12345678901", resultat);
     }
 
-    //Tester loggetInn returnerer null
     @Test
     public void test_IkkeLoggetInn(){
-        //arange
-        session.getAttribute(null);
 
-        //act
+        //arrange
+        session.setAttribute("Innlogget",null);
+
+        // act
         String resultat = sikkerhetsController.loggetInn();
 
-        //assert
-        assertEquals(resultat, null);
+        //asaert
+        assertNull(resultat);
     }
 
 }
-
