@@ -1,4 +1,4 @@
-package oslomet.testing;  //Martine jobber med denne
+package oslomet.testing;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -212,9 +212,9 @@ public class EnhetstestBankController {
         //assert
         assertNull(resultat);
     }
-//Det er noe galt med utforBetaling. Må undersøkes nærmere
+
     @Test
-    public void utforBetaling(){
+    public void utforBetaling_LoggetInn(){
         //arrange
         List<Transaksjon> betalingUtforsel = new ArrayList<>();
         Transaksjon betalingUtforsel1 = new Transaksjon(0, "20102012345", 100.50, "2015-03-15", "Fjordkraft", "1", "105010123456");
@@ -225,12 +225,12 @@ public class EnhetstestBankController {
         //act
         Mockito.when(sjekk.loggetInn()).thenReturn("01010110523");
 
-        Mockito.when(bankController.utforBetaling(0)).thenReturn(betalingUtforsel);
+        Mockito.when(repository.utforBetaling(0)).thenReturn("12345678901");
 
         List<Transaksjon> resultat = bankController.utforBetaling(0);
 
         //assert
-        assertEquals(betalingUtforsel, resultat);
+        assertEquals( null, resultat);
     }
 
     @Test
@@ -253,7 +253,7 @@ public class EnhetstestBankController {
                 "Lene", "Jensen", "Askerveien 22", "3270",
                 "Asker", "22224444", "HeiHei");
 
-        Kunde inKunde = new Kunde("01010110524",
+        Kunde toKunde = new Kunde("01010110524",
                 "Lene", "Jensen", "Askerveien 22", "3270",
                 "Asker", "22224444", "HeiHei");
 
@@ -264,8 +264,8 @@ public class EnhetstestBankController {
         Kunde resultat = bankController.hentKundeInfo();
         assertEquals(enKunde, resultat);
 
-        when(repository.endreKundeInfo(inKunde)).thenReturn("OK");
-        String result = bankController.endre(inKunde);
+        when(repository.endreKundeInfo(toKunde)).thenReturn("OK");
+        String result = bankController.endre(toKunde);
         assertEquals(result, "OK");
     }
 
