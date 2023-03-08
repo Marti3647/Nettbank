@@ -6,6 +6,7 @@ import oslomet.testing.DAL.AdminRepository;
 import oslomet.testing.Models.Kunde;
 import oslomet.testing.Sikkerhet.Sikkerhet;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 @RestController
@@ -16,6 +17,14 @@ public class AdminKundeController {
 
     @Autowired
     private Sikkerhet sjekk;
+
+    @Autowired
+    private DataSource dataSource;
+
+    @GetMapping("/initDB")
+    public String initDB(){
+        return repository.initDB(dataSource);
+    }
 
     @GetMapping("/hentAlle")
     public List<Kunde> hentAlle() {
