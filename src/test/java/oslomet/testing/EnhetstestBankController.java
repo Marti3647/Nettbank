@@ -72,7 +72,7 @@ public class EnhetstestBankController {
     public void hentKonti_LoggetInn()  {
         // arrange
         List<Konto> konti = new ArrayList<>();
-        Konto konto1 = new Konto("01010110523", "01010110523",
+        Konto konto1 = new Konto("01010110523", "105010123456",
                 720, "Lønnskonto", "NOK", null);
         Konto konto2 = new Konto("01010110523", "12345678901",
                 1000, "Lønnskonto", "NOK", null);
@@ -105,19 +105,24 @@ public class EnhetstestBankController {
 
     @Test
     public void hentTransaksjoner_LoggetInn() {
-        // arrange  // Hvordan skal txID defineres i arrayet? og hva vil avventer si?
+        // arrange
         List<Transaksjon> transaksjoner = new ArrayList<>();
-        Transaksjon transaksjon1 = new Transaksjon(0, "20102012345", 100.50, "2015-03-15", "Fjordkraft", "1", "105010123456");
-        Transaksjon transaksjon2 = new Transaksjon(1, "105010123456", 3000, "2023-02-07", "OverføringMellomKonto", "1", "12345678901");
+        Transaksjon transaksjon1 = new Transaksjon(1, "20102012345", 100.5,
+                "2015-03-15", "Fjordkraft", "1", "105010123456" );
+        Transaksjon transaksjon2 = new Transaksjon(2, "20102012345", 400.4,
+                "2015-03-20", "Skagen", "1", "105010123456");
         transaksjoner.add(transaksjon1);
         transaksjoner.add(transaksjon2);
 
-        Konto testKonto = new Konto("01010110523", "5428458416", 20000.0, "Brukskonto", "NOK", transaksjoner);
+        Konto testKonto = new Konto("01010110523", "5428458416", 20000.0,
+                "Brukskonto", "NOK", transaksjoner);
 
         // act
         when(sjekk.loggetInn()).thenReturn("01010110523");
-        when(repository.hentTransaksjoner("12345678901", "2023-02-01", "2023-02-07")).thenReturn(testKonto);
-        Konto resultat = bankController.hentTransaksjoner("12345678901", "2023-02-01", "2023-02-07");
+        when(repository.hentTransaksjoner("12345678901", "2023-02-01",
+                "2023-02-07")).thenReturn(testKonto);
+        Konto resultat = bankController.hentTransaksjoner("12345678901",
+                "2023-02-01", "2023-02-07");
 
         // assert
         assertEquals(testKonto, resultat);
@@ -166,7 +171,8 @@ public class EnhetstestBankController {
 
     @Test
     public void registrerBetaling_loggetInn(){
-        Transaksjon transaksjoner = new Transaksjon(0, "20102012345", 3000, "2023-02-01", "overføringMellomKonto", "1", "12345678901");
+        Transaksjon transaksjoner = new Transaksjon(0, "20102012345", 3000,
+                "2023-02-01", "overføringMellomKonto", "1", "12345678901");
         when(sjekk.loggetInn()).thenReturn("01010110523");
         when(repository.registrerBetaling(transaksjoner)).thenReturn("OK");
         String resultat = bankController.registrerBetaling(transaksjoner);
@@ -175,7 +181,8 @@ public class EnhetstestBankController {
 
     @Test
     public void registrerBetaling_ikkeLoggetInn(){
-        Transaksjon transaksjoner = new Transaksjon(0, "20102012345", 3000, "2023-02-01", "overføringMellomKonto", "1", "12345678901");
+        Transaksjon transaksjoner = new Transaksjon(0, "20102012345", 3000,
+                "2023-02-01", "overføringMellomKonto", "1", "12345678901");
         when(sjekk.loggetInn()).thenReturn(null);
         String resultat = bankController.registrerBetaling(transaksjoner);
         assertNull(resultat);
@@ -185,8 +192,10 @@ public class EnhetstestBankController {
     public void hentBetaling_LoggetInn(){
         // arrange
         List<Transaksjon> betalingInfo = new ArrayList<>(); //oppretter en ny arraylist "betalingInfo"
-        Transaksjon betaling1 = new Transaksjon(0, "20102012345", 100.50, "2015-03-15", "Fjordkraft", "1", "105010123456");
-        Transaksjon betaling2 = new Transaksjon(1, "105010123456", 3000, "2023-02-07", "OverføringMellomKonto", "1", "12345678901");
+        Transaksjon betaling1 = new Transaksjon(0, "20102012345", 100.50,
+                "2015-03-15", "Fjordkraft", "1", "105010123456");
+        Transaksjon betaling2 = new Transaksjon(1, "105010123456", 3000,
+                "2023-02-07", "OverføringMellomKonto", "1", "12345678901");
         betalingInfo.add(betaling1);
         betalingInfo.add(betaling2);
 
@@ -217,8 +226,10 @@ public class EnhetstestBankController {
     public void utforBetaling_LoggetInn(){
         //arrange
         List<Transaksjon> betalingUtforsel = new ArrayList<>();
-        Transaksjon betalingUtforsel1 = new Transaksjon(0, "20102012345", 100.50, "2015-03-15", "Fjordkraft", "1", "105010123456");
-        Transaksjon betalingUtforsel2 = new Transaksjon(1, "105010123456", 3000, "2023-02-07", "OverføringMellomKonto", "1", "12345678901");
+        Transaksjon betalingUtforsel1 = new Transaksjon(0, "20102012345",
+                100.50, "2015-03-15", "Fjordkraft", "1", "105010123456");
+        Transaksjon betalingUtforsel2 = new Transaksjon(1, "105010123456",
+                3000, "2023-02-07", "OverføringMellomKonto", "1", "12345678901");
         betalingUtforsel.add(betalingUtforsel1);
         betalingUtforsel.add(betalingUtforsel2);
 
