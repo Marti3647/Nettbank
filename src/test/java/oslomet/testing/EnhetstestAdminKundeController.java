@@ -31,10 +31,10 @@ public class EnhetstestAdminKundeController {
     @Test
     public void test_hentAlle(){
         // arrange
-        Kunde kunde1 = new Kunde("12345678", "Bhiravina", "Mahesh", "Ryenstubben 1",
+        Kunde kunde1 = new Kunde("12345678", "Kari", "Iversen", "Ryenstubben 1",
                 "1187", "OSLO", "45673864", "passord123");
-        Kunde kunde2 = new Kunde("87654321", "Archanaa", "Mahesh", "Ryenstubben 1",
-                "1187", "OSLO", "43892098", "passord123");
+        Kunde kunde2 = new Kunde("87654321", "Hans", "Olav", "Osloveien 72",
+                "9065", "OSLO", "43892098", "passord123");
         List<Kunde> kundeListe = new ArrayList<>();
 
         kundeListe.add(kunde1);
@@ -65,7 +65,7 @@ public class EnhetstestAdminKundeController {
     @Test
     public void test_lagreKunde(){
         //arrange
-        Kunde kunde1 = new Kunde("12345678", "Bhiravina", "Mahesh", "Ryenstubben 1",
+        Kunde kunde1 = new Kunde("12345678", "Kari", "Iversen", "Ryenstubben 1",
                 "1187", "OSLO", "45673864", "passord123");
         Mockito.when(sikkerhet.loggetInn()).thenReturn("12345678");
         Mockito.when(repository.registrerKunde(kunde1)).thenReturn("OK");
@@ -80,7 +80,7 @@ public class EnhetstestAdminKundeController {
     @Test
     public void test_lagreKundeFeil(){
         //arrange
-        Kunde kunde1 = new Kunde("12345678", "Bhiravina", "Mahesh", "Ryenstubben 1",
+        Kunde kunde1 = new Kunde("12345678", "Kari", "Iversen", "Ryenstubben 1",
                 "1187", "OSLO", "45673864", "passord123");
 
         Mockito.when(sikkerhet.loggetInn()).thenReturn(null);
@@ -95,7 +95,7 @@ public class EnhetstestAdminKundeController {
     @Test
     public void test_endre(){
         //arrange
-        Kunde kunde1 = new Kunde("12345678", "Bhiravina", "Mahesh", "Ryenstubben 1",
+        Kunde kunde1 = new Kunde("12345678", "Kari", "Iversen", "Ryenstubben 1",
                 "1187", "OSLO", "45673864", "passord123");
 
         Mockito.when(sikkerhet.loggetInn()).thenReturn("12345678");
@@ -111,7 +111,7 @@ public class EnhetstestAdminKundeController {
     @Test
     public void test_endreFeil(){
         //arrange
-        Kunde kunde1 = new Kunde("12345678", "Bhiravina", "Mahesh", "Ryenstubben 1",
+        Kunde kunde1 = new Kunde("12345678", "Kari", "Iversen", "Ryenstubben 1",
                 "1187", "OSLO", "45673864", "passord123");
 
         Mockito.when(sikkerhet.loggetInn()).thenReturn(null);
